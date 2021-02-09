@@ -29,29 +29,7 @@ spec:
         valueFrom:
           secretKeyRef:
             name: jenkins-credentials
-            key: gitReadAccessToken             
-      - name: "GOOGLE_APPLICATION_CREDENTIALS"
-        value: "/var/run/secret/cloud.google.com/service-account.json"
-      - name: NEXUS_USERNAME
-        valueFrom:
-          secretKeyRef:
-            name: jenkins-credentials
-            key: nexusUsername                      
-      - name: NEXUS_PASSWORD
-        valueFrom:
-          secretKeyRef:
-            name: jenkins-credentials
-            key: nexusPassword                      
-      - name: CI_DB_USER
-        valueFrom:
-          secretKeyRef:
-            name: jenkins-credentials
-            key: ciDbUsername                      
-      - name: CI_DB_PWD
-        valueFrom:
-          secretKeyRef:
-            name: jenkins-credentials
-            key: ciDbpassword                      
+            key: gitReadAccessToken                                  
     volumeMounts:
       - name: jenkins-docker-cfg
         mountPath: /root/.docker
@@ -153,10 +131,6 @@ spec:
                                     /kaniko/executor -f `pwd`/${buildConfig.getDockerFile()} -c `pwd`/${buildConfig.getContext()} \
                                     --build-arg WORK_DIR=${workDir} \
                                     --build-arg token=\$GIT_ACCESS_TOKEN \
-                                    --build-arg nexusUsername=\$NEXUS_USERNAME \
-                                    --build-arg nexusPassword=\$NEXUS_PASSWORD \
-                                    --build-arg ciDbUsername=\$CI_DB_USER \
-                                    --build-arg ciDbpassword=\$CI_DB_PWD \
                                     --cache=true --cache-dir=/cache \
                                     --single-snapshot=true \
                                     --snapshotMode=time \
@@ -173,10 +147,6 @@ spec:
                                     /kaniko/executor -f `pwd`/${buildConfig.getDockerFile()} -c `pwd`/${buildConfig.getContext()} \
                                     --build-arg WORK_DIR=${workDir} \
                                     --build-arg token=\$GIT_ACCESS_TOKEN \
-                                    --build-arg nexusUsername=\$NEXUS_USERNAME \
-                                    --build-arg nexusPassword=\$NEXUS_PASSWORD \
-                                    --build-arg ciDbUsername=\$CI_DB_USER \
-                                    --build-arg ciDbpassword=\$CI_DB_PWD \
                                     --cache=true --cache-dir=/cache \
                                     --single-snapshot=true \
                                     --snapshotMode=time \
